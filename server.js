@@ -7,28 +7,23 @@ import adminRouter from "./routes/adminRoute.js";
 import doctorRouter from "./routes/doctorRoute.js";
 import userRouter from "./routes/userRoute.js";
 
-// App Config
 const app = express();
-const port = process.env.PORT || 4000;
 connectDB();
 connectCloudinary();
 
+app.use(
+  cors({
+    origin: "https://vercel-adminpanel.vercel.app",
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "atoken"],
+    credentials: true
+  })
+);
 
-
-
-// Allow all origins
-app.use(cors({
-  origin: true, // dynamically allow all origins
-  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"]
-}));
-
-// Handle OPTIONS preflight requests
 app.options("*", cors());
 
 app.use(express.json());
 
-// Api Endpoints
 app.use("/api/admin", adminRouter);
 app.use("/api/doctor", doctorRouter);
 app.use("/api/user", userRouter);
@@ -37,4 +32,4 @@ app.get("/", (req, res) => {
   res.status(200).send("API Working");
 });
 
-app.listen(port, () => console.log("Server Started ", port));
+export default app; // REQUIRED ON VERCEL
