@@ -5,28 +5,26 @@ import connectDB from "./config/mongodb.js";
 import connectCloudinary from "./config/cloudinary.js";
 import adminRouter from "./routes/adminRoute.js";
 import doctorRouter from "./routes/doctorRoute.js";
-import userRouter from "./routes/userRouter.js";
+import userRouter from "./routes/userRoute.js";
 
 const app = express();
 connectDB();
 connectCloudinary();
 
-// Allow multiple origins safely
-const allowedOrigins = [
-  "https://vercel-adminpanel.vercel.app",
-  "https://vercel-frontend-coral-two.vercel.app"
-];
+// Allow multiple origins
+
+
+
 
 app.use(
   cors({
-    origin: allowedOrigins, // simply pass an array
+    origin: "https://vercel-adminpanel.vercel.app",
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization", "atoken"],
     credentials: true
   })
 );
 
-// Handle OPTIONS preflight
 app.options("*", cors());
 
 app.use(express.json());
