@@ -19,14 +19,7 @@ const allowedOrigins = [
 
 app.use(
   cors({
-    origin: function (origin, callback) {
-      // allow requests with no origin (Postman or curl)
-      if (!origin) return callback(null, true);
-      // if origin is allowed
-      if (allowedOrigins.includes(origin)) return callback(null, true);
-      // if origin not allowed, just block silently (do NOT throw an Error)
-      return callback(null, false);
-    },
+    origin: allowedOrigins, // simply pass an array
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization", "atoken"],
     credentials: true
