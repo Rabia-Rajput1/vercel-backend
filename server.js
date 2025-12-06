@@ -11,7 +11,7 @@ const app = express();
 connectDB();
 connectCloudinary();
 
-// Allow multiple origins
+// Allow multiple origins safely
 const allowedOrigins = [
   "https://vercel-adminpanel.vercel.app",
   "https://vercel-frontend-coral-two.vercel.app"
@@ -20,13 +20,12 @@ const allowedOrigins = [
 app.use(
   cors({
     origin: function (origin, callback) {
-      // allow requests with no origin (like Postman)
+      // allow requests with no origin (Postman or curl)
       if (!origin) return callback(null, true);
-      if (allowedOrigins.indexOf(origin) === -1) {
-        const msg = `The CORS policy for this site does not allow access from the specified Origin: ${origin}`;
-        return callback(new Error(msg), false);
-      }
-      return callback(null, true);
+      // if origin is allowed
+      if (allowedOrigins.includes(origin)) return callback(null, true);
+      // if origin not allowed, just block silently (do NOT throw an Error)
+      return callback(null, false);
     },
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization", "atoken"],
@@ -34,7 +33,7 @@ app.use(
   })
 );
 
-// Handle OPTIONS preflight requests
+// Handle OPTIONS preflight
 app.options("*", cors());
 
 app.use(express.json());
