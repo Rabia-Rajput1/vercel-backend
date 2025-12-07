@@ -20,7 +20,7 @@ app.use(
   cors({
     origin: ["https://vercel-adminpanel.vercel.app","https://vercel-frontend-coral-two.vercel.app"],
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization", "atoken"],
+    allowedHeaders: ["Content-Type", "Authorization", "atoken", "token"],
     credentials: true
   })
 );
