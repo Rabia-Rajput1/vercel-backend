@@ -24,7 +24,7 @@ app.use(
       "https://vercel-adminpanel.vercel.app",
       "https://vercel-frontend-coral-two.vercel.app"],
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization", "atoken", "token"],
+    allowedHeaders: ["Content-Type", "Authorization", "atoken", "token","dtoken"],
     credentials: true
   })
 );
