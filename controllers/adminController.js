@@ -182,6 +182,44 @@ const adminDashboard = async (req, res) => {
   }
 };
 
+
+const deleteDoctor = async (req, res)=>{
+
+  try {
+
+    const {id} = req.params;
+    const doctor = await doctorModel.findById(id);
+
+    if (!doctor) {
+      return res.json({
+        success: false,
+        message: "Doctor not found",
+      });
+    }
+
+    // OPTIONAL (recommended): delete doctor's appointments
+    await appointmentModel.deleteMany({ docId: id });
+
+    // Delete doctor
+    await doctorModel.findByIdAndDelete(id);
+
+    res.json({
+      success: true,
+      message: "Doctor deleted successfully",
+    });
+    
+  } catch (error) {
+
+    console.error(error);
+    res.json({
+      success: false,
+      message: error.message,
+    });
+    
+  }
+}
+
+
 export {
   addDoctor,
   loginAdmin,
@@ -189,4 +227,5 @@ export {
   appointmentsAdmin,
   appointmentCancel,
   adminDashboard,
+  deleteDoctor,
 };
